@@ -1,11 +1,11 @@
 import React from 'react';
 import { StyleSheet, css } from 'aphrodite';
 
-function FileUpload(){
+function Data(){
     return(
         <>
         <div className={css(styles.page)}>
-        <h1 className={css(styles.h1)}>Importação de Produtos</h1>
+        <h1 className={css(styles.h1)}>Importação de Dados</h1>
         <form class="app-form">
             <mat-form-field class="app-form-control">
             <ngx-mat-file-input placeholder="Anexos" formControlName="anexos"></ngx-mat-file-input>
@@ -34,4 +34,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default FileUpload
+export default Data
