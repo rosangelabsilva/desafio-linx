@@ -61,9 +61,6 @@ const styles = StyleSheet.create({
     background: '#FFFFFF',
     borderRadius: 10
   },
-  page:{
-    background: '#E5E5E5'
-  },
   form:{
     display: 'flex',
   },
@@ -74,10 +71,10 @@ const styles = StyleSheet.create({
   },
   button:{
       position: 'absolute',
-      top: 50,
-      left: 270,
+      top: 55.06,
+      left: 291.06,
       textDecoration: 'none',
-      fontSize: 20,
+      fontSize: 15,
       border: 'none',
       background: '#FFFFFF',
   }
