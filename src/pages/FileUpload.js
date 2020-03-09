@@ -1,6 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import { StyleSheet, css } from 'aphrodite';
 import axios from 'axios';
+import https from 'https';
+
 
 import Button from '../components/Button';
 import Message from '../components/Message';
@@ -23,26 +25,31 @@ function FileUpload(){
         const formData = new FormData();
         formData.append('file', file);
         try {
-            const res = await axios.post('/upload', formData, {
+            const httpsAgent = new https.Agent({
+                rejectUnauthorized: false // (NOTE: this will disable client verification)
+              });
+              
+              
+            const res = await axios.post('https://localhost:5001/api/Items/upload', formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data' 
+                    'Content-Type': 'multipart/form-data'
                 },
+                httpsAgent: httpsAgent,
                 onUploadProgress: progressEvent => {
                   setUploadPercentage(parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total)))
                 
                 setTimeout(() => setUploadPercentage(0), 10000);
                 }
-
+                
              });
              const { fileName, filePath } = res.data;
              setUploadedFile({ fileName, filePath });
              setMessage('File uploaded');
         } catch(err) {
-            if(err.response.status === 500) {
-                setMessage('There was a problem with the server');
-            }else{
-                setMessage(err.response.data.msg);
-            }
+            console.log("ERRO", err);
+            
+            setMessage('There was a problem with the server');
+            
         }
     }
     return(
