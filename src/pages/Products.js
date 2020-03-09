@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, css } from 'aphrodite';
+import axios from 'axios';
+import https from 'https';
+
 import Button from "../components/Button";
 
 function Products(){
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const httpsAgent = new https.Agent({
+      rejectUnauthorized: false // (NOTE: this will disable client verification)
+    });
+    
+    axios.get('https://localhost:5001/api/Items', {
+      httpsAgent: httpsAgent
+    })
+    .then((items) => {
+      setData(items.data)
+    })
+  },[])
+
     return(
         <>
         <div className={css(styles.page)}>
@@ -19,6 +37,9 @@ function Products(){
                     <th>Nome</th>
                     <th>Valor</th>
                 </tr>
+                {data.map((item) => {
+                  return <tr><th>{item.id}</th><th>{item.nome}</th><th>{item.valor}</th></tr>
+                })}
             </table>
         </form>
         </div>

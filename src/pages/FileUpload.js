@@ -29,7 +29,6 @@ function FileUpload(){
                 rejectUnauthorized: false // (NOTE: this will disable client verification)
               });
               
-              
             const res = await axios.post('https://localhost:5001/api/Items/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
