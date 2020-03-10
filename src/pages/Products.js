@@ -7,6 +7,9 @@ import Button from "../components/Button";
 
 function Products(){
   const [data, setData] = useState([]);
+  const [name, setName] = useState('');
+  const [searchResults, setResults] = useState([]);
+  const [allItems] = useState('');
 
   useEffect(() => {
     const httpsAgent = new https.Agent({
@@ -21,27 +24,36 @@ function Products(){
     })
   },[])
 
+  useEffect(() => {
+    const results = data.filter(item => 
+      item.nome.toLowerCase().includes(name)
+    );
+    setResults(results);
+  }, [name]);
+
     return(
         <>
         <div className={css(styles.page)}>
         <h1 className={css(styles.h1)}>Listagem de Produtos</h1>
         <div className={css(styles.forms)}>
         <form className={css(styles.form)}>
-            <input type='text' placeholder='Busque por palavra-chave' className={css(styles.input)}></input>
+            <input type='text' value={name} placeholder='Busque por palavra-chave' onChange={(e) => setName(e.target.value)} className={css(styles.input)}></input>
             <Button title= '🔎' className={css(styles.button)}></Button>
         </form>
-        <form>
-            <table className={css(styles.table)}>
-                <tr>
-                    <th>Código</th>
-                    <th>Nome</th>
-                    <th>Valor</th>
-                </tr>
-                {data.map((item) => {
-                  return <tr><th>{item.id}</th><th>{item.nome}</th><th>{item.valor}</th></tr>
-                })}
-            </table>
-        </form>
+        <table className={css(styles.table)}>
+          <tr className={css(styles.tr)}>
+            <th>Código</th>
+            <th>Nome</th>
+            <th>Valor</th>
+          </tr>
+          {searchResults.map((item) => (            
+          <tr className={css(styles.trdata)}><th>{item.id}</th><th>{item.nome}</th><th>{item.valor}</th></tr>
+          ))}
+
+          {data.map((item) => {
+            return <tr value={allItems} className={css(styles.trdata)}><th>{item.id}</th><th>{item.nome}</th><th>{item.valor}</th></tr>
+          })}
+        </table>
         </div>
         </div>
         </>
@@ -67,7 +79,7 @@ const styles = StyleSheet.create({
     height: 50,
     left: 62,
     top: 39,
-    border: 0.5,
+    border: 1,
     borderColor:'#000000',
     borderStyle: 'solid',
     boxSizing: 'border-box',
@@ -88,7 +100,27 @@ const styles = StyleSheet.create({
   table:{
     left: 60,
     top: 116,
-    position: 'absolute'
+    position: 'absolute',
+    width: 1050
+  },
+  tr:{
+    textDecoration: 'none',
+    background: '#7A4A8C',
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontFamily: 'Dosis',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    height: 52
+  },
+  trdata:{
+    background: '#FFFFFF',
+    color: '#0E0E0E',
+    fontSize: 18,
+    fontFamily: 'Dosis',
+    fontStyle: 'normal',
+    fontWeight: 'bolder',
+    height: 52,
   },
   button:{
       position: 'absolute',
