@@ -3,8 +3,6 @@ import { StyleSheet, css } from 'aphrodite';
 import axios from 'axios';
 import https from 'https';
 
-import Button from "../components/Button";
-
 function Products(){
   const [data, setData] = useState([]);
   const [name, setName] = useState('');
@@ -22,7 +20,7 @@ function Products(){
     .then((items) => {
       setData(items.data)
     })
-  },[])
+  },[]);
 
   useEffect(() => {
     const results = data.filter(item => 
@@ -37,8 +35,12 @@ function Products(){
         <h1 className={css(styles.h1)}>Listagem de Produtos</h1>
         <div className={css(styles.forms)}>
         <form className={css(styles.form)}>
-            <input type='text' value={name} placeholder='Busque por palavra-chave' onChange={(e) => setName(e.target.value)} className={css(styles.input)}></input>
-            <Button title= '🔎' className={css(styles.button)}></Button>
+            <input type='text' 
+            value={name} 
+            placeholder='Busque por palavra-chave                🔎' 
+            onChange={(e) => setName(e.target.value)} 
+            className={css(styles.input)}>
+            </input>
         </form>
         <table className={css(styles.table)}>
           <tr className={css(styles.tr)}>
@@ -46,13 +48,18 @@ function Products(){
             <th>Nome</th>
             <th>Valor</th>
           </tr>
-          {searchResults.map((item) => (            
-          <tr className={css(styles.trdata)}><th>{item.id}</th><th>{item.nome}</th><th>{item.valor}</th></tr>
+          {searchResults.map((item) => (           
+            <tr className={css(styles.trdata)}>
+              <th>{item.id}</th><th>{item.nome}</th><th>{item.valor}</th>
+            </tr>
           ))}
 
           {data.map((item) => {
-            return <tr value={allItems} className={css(styles.trdata)}><th>{item.id}</th><th>{item.nome}</th><th>{item.valor}</th></tr>
-          })}
+            if(name===''){
+              return <tr value={allItems} className={css(styles.trdata)}>
+                <th>{item.id}</th><th>{item.nome}</th><th>{item.valor}</th>
+                </tr>
+            } else {return null} })}
         </table>
         </div>
         </div>
@@ -101,10 +108,10 @@ const styles = StyleSheet.create({
     left: 60,
     top: 116,
     position: 'absolute',
-    width: 1050
+    width: 1050,
+    height: 100,
   },
   tr:{
-    textDecoration: 'none',
     background: '#7A4A8C',
     color: '#FFFFFF',
     fontSize: 18,

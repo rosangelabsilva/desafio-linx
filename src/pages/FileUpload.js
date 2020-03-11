@@ -64,18 +64,14 @@ function FileUpload(){
                     <div className="custom-file mb-4">
                         <input 
                         type="file" 
-                        className="custom-file-input" 
+                        className={css(styles.btnfile)} 
                         id="customFile" onChange={onChangeHandler} />
-                        <label className="custom-file-label" htmlFor="customFile">
+                        <label className="custom-file-label">
                         {fileName}
                         </label>
                     </div>
                     <Progress percentage={uploadPercentage} />
-                    <input
-                    type="submit"
-                    value="Upload"
-                    className="btn btn-primary btn-block mt-4"
-                    />
+                    <Button title='Enviar' value='Upload' className={css(styles.button)}></Button>
                 </form>
                 { uploadedFile ? <div className="row mt-5">
                 <div className="col-md-6">
@@ -83,9 +79,7 @@ function FileUpload(){
                 </div>
                 </div> : null}
             </Fragment>
-         {/* <p>Para enviar um arquivo</p> */}
         </form>
-        <Button title='Enviar' className={css(styles.button)}></Button>
         </div>
         </div>
         </>
@@ -131,8 +125,8 @@ const styles = StyleSheet.create({
         height: 50,
         background: 'linear-gradient(90deg, #FF4427 0%, #FFBA00 97.87%)',
         borderRadius: 25,
-        left: 1036,
-        top: 24
+        left: 960,
+        bottom: 340
     },
     img:{
         position: 'absolute',
@@ -140,6 +134,11 @@ const styles = StyleSheet.create({
         height: '50%',
         left: '25%',
         top: '15%'
+    },
+    btnfile:{
+        position: 'absolute',
+        top: '70%',
+        left:'20%'
     }
 });
 
